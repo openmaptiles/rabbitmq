@@ -76,7 +76,13 @@ if [ "$1" = 'rabbitmq-server' ]; then
 			      { ssl_listeners, [ ] },
 			EOS
 		fi
-		
+
+		if [ -z "$RABBITMQ_HEARTBEAT" ]; then
+			cat >> /etc/rabbitmq/rabbitmq.config <<-EOC
+			      { heartbeat, $RABBITMQ_HEARTBEAT },
+			EOC
+		fi
+
 		for conf in "${configs[@]}"; do
 			[ "${conf#ssl_}" = "$conf" ] || continue
 			var="RABBITMQ_${conf^^}"
