@@ -77,7 +77,7 @@ if [ "$1" = 'rabbitmq-server' ]; then
 			EOS
 		fi
 
-		if [ -z "$RABBITMQ_HEARTBEAT" ]; then
+		if ! [ -z "$RABBITMQ_HEARTBEAT" ]; then
 			cat >> /etc/rabbitmq/rabbitmq.config <<-EOC
 			      { heartbeat, $RABBITMQ_HEARTBEAT },
 			EOC
